@@ -10,7 +10,7 @@
 
 <body>
   <div id="app">
-
+<p>{{ alertMessage }}</p>
     <section class="row">
       <div class="small-6 columns">
         <h1 class="text-center">YOU</h1>
@@ -72,24 +72,46 @@
           return this.playerHealth -= normalDamagePlayer, this.monsterHealth -= normalDamageMonster, this.testList.push('Monster hits player for ' + normalDamagePlayer, 'Player hits monster for ' + normalDamageMonster);
         },
         specialAttack: function() {
-          var specialDamagePlayer = Math.round(Math.random() * 10);
-          var specialDamageMonster = Math.round(Math.random() * 10);
+          var specialDamagePlayer = Math.round(Math.random() * 20);
+          var specialDamageMonster = Math.round(Math.random() * 20);
           console.log(this.playerHealth);
           console.log(this.monsterHealth);
         return this.playerHealth -= specialDamagePlayer, this.monsterHealth -= specialDamageMonster, this.testList.push('Monster hits player for ' + specialDamagePlayer, 'Player hits monster for ' + specialDamageMonster);
         },
         playerHeal: function() {
+          var normalDamagePlayer = Math.round(Math.random() * 10);
+          var normalDamageMonster = Math.round(Math.random() * 10);
           console.log(this.playerHealsLeft);
           console.log(this.playerHealth);
           console.log(this.monsterHealth);
           if (this.playerHealsLeft > 0) {
-            return this.playerHealsLeft--, this.playerHealth += 5, this.playerHealth -= Math.round(Math.random() * 10), this.monsterHealth -= Math.round(Math.random() * 10);
+            return this.playerHealsLeft--, this.playerHealth += 5, this.playerHealth -= normalDamagePlayer, this.monsterHealth -= normalDamageMonster, this.testList.push('Monster hits player for ' + normalDamagePlayer, 'Player hits monster for ' + normalDamageMonster);
           }
         },
         giveUp: function() {
-          return this.playerHealth = 100, this.monsterHealth = 100, this.show = true;
+          return this.playerHealth = 100, this.monsterHealth = 100, this.show = true, this.testList.length = 0;
+        },
+      },
+      computed: {
+        alertMessage: function () {
+          if (this.playerHealth < 0) {
+                 alert ('Monster has won the game!');
+                 return this.playerHealth = 100, this.monsterHealth = 100, this.show = true, this.testList.length = 0;
+               } else if (this.monsterHealth < 0) {
+                 alert ('Player has won the game!');
+                 return this.playerHealth = 100, this.monsterHealth = 100, this.show = true, this.testList.length = 0;
+               }
         },
       }
+      // computed: {
+      //     alertMessage: function () {
+      //       if (this.playerHealth < 0) {
+      //         alert ('Monster has won the game!');
+      //       } else if (this.monsterHealth < 0) {
+      //         alert ('Player has wont the game!');
+      //       }
+      //     }
+      //   }
     })
   </script>
 
